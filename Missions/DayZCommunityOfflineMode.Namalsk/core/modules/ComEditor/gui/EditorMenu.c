@@ -8,6 +8,7 @@ class EditorMenu extends UIScriptedMenu
 	protected ButtonWidget m_GameButton;
 	protected ButtonWidget m_CameraButton;
 	protected ButtonWidget m_ObjectEditorButton;
+	protected ButtonWidget m_LootDebugButton;
 	
 	protected Widget m_objectMenu;
 	protected Widget m_weatherMenu;
@@ -28,7 +29,7 @@ class EditorMenu extends UIScriptedMenu
 
 	override Widget Init()
     {
-        layoutRoot = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\ComEditor\\gui\\layouts\\EditorMenu.layout" );
+        layoutRoot = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\ComEditor\\gui\\layouts\\EditorMenu.layout" );
 
 		m_ObjectButton   = ButtonWidget.Cast( layoutRoot.FindAnyWidget("objects_button") );
 		m_PositionButton = ButtonWidget.Cast( layoutRoot.FindAnyWidget("position_button") );
@@ -36,15 +37,16 @@ class EditorMenu extends UIScriptedMenu
 		m_GameButton     = ButtonWidget.Cast( layoutRoot.FindAnyWidget("game_button") );
 		m_CameraButton   = ButtonWidget.Cast( layoutRoot.FindAnyWidget("camera_button") );
 		m_ObjectEditorButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget( "objectEditor_button" ));
+		m_LootDebugButton    = ButtonWidget.Cast(layoutRoot.FindAnyWidget( "lootdebug_button" ));
 
 
 		// object menu
-		m_objectMenu   = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\ComEditor\\gui\\layouts\\ObjectMenu.layout", layoutRoot );
-		m_weatherMenu  = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\ComEditor\\gui\\layouts\\WeatherMenu.layout", layoutRoot );
-		m_positionMenu = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\Admintool\\gui\\layouts\\PositionMenu.layout", layoutRoot );
-		m_gameMenu 	   = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\ComEditor\\gui\\layouts\\GameMenu.layout", layoutRoot );
-		m_objectInfoMenu = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\ComEditor\\gui\\layouts\\ObjectEditorInfo.layout", layoutRoot );
-		m_cameraMenu = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.ChernarusPlus\\core\\modules\\CameraTool\\gui\\layouts\\CameraSettings.layout", layoutRoot );
+		m_objectMenu   = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\ComEditor\\gui\\layouts\\ObjectMenu.layout", layoutRoot );
+		m_weatherMenu  = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\ComEditor\\gui\\layouts\\WeatherMenu.layout", layoutRoot );
+		m_positionMenu = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\Admintool\\gui\\layouts\\PositionMenu.layout", layoutRoot );
+		m_gameMenu 	   = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\ComEditor\\gui\\layouts\\GameMenu.layout", layoutRoot );
+		m_objectInfoMenu = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\ComEditor\\gui\\layouts\\ObjectEditorInfo.layout", layoutRoot );
+		m_cameraMenu = GetGame().GetWorkspace().CreateWidgets( "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\CameraTool\\gui\\layouts\\CameraSettings.layout", layoutRoot );
 
         return layoutRoot;
 	}
@@ -137,10 +139,19 @@ class EditorMenu extends UIScriptedMenu
 			ObjectEditor.Cast( COM_GetModuleManager().GetModule( ObjectEditor )).ToggleEditor();
 		}
 
-		if ( w == m_CameraButton ) 
+		if ( w == m_CameraButton )
 		{
 			m_cameraMenu.GetScript( popMenu );
 		}
+
+		#ifdef MODULE_LOOT_DEBUG
+		if ( w == m_LootDebugButton )
+		{
+			LootDebug ld = LootDebug.Cast( COM_GetModuleManager().GetModule( LootDebug ) );
+			if ( ld ) ld.DumpLootInfo();
+			return false;
+		}
+		#endif
 
 		if ( popMenu ) 
 		{

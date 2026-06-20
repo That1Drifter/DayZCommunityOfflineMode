@@ -131,7 +131,14 @@ class CommunityOfflineClient extends MissionGameplay
         {
             return new EditorMenu();
         }
-        
+
+        #ifdef MODULE_LOOT_DEBUG
+        if(id == LootDebugMenu.MENU_ID)
+        {
+            return new LootDebugMenu();
+        }
+        #endif
+
         return super.CreateScriptedMenu(id);
     }
 }

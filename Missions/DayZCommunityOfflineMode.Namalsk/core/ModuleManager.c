@@ -4,6 +4,7 @@
 #include "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\KeyMouseBinding.c"
 
 #ifdef COM_MODULES_OLDLOADING
+#include "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\LootDebug\\module.c"
 #include "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\Admintool\\module.c"
 #include "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\CameraTool\\module.c"
 #include "$CurrentDir:missions\\DayZCommunityOfflineMode.Namalsk\\core\\modules\\ComEditor\\module.c"
@@ -62,6 +63,9 @@ class ModuleManager
         #endif
         #ifdef MODULE_DEBUG_MONITOR
         RegisterModule( new CustomDebugMonitor );
+        #endif
+        #ifdef MODULE_LOOT_DEBUG
+        RegisterModule( new LootDebug );
         #endif
     }
 
@@ -222,7 +226,7 @@ ModuleManager COM_GetModuleManager()
 {
     if( !g_com_ModuleManager )
     {
-        g_com_ModuleManager = new ref ModuleManager();
+        g_com_ModuleManager = new ModuleManager();
     }
 
     return g_com_ModuleManager;
@@ -235,7 +239,7 @@ ModuleManager NewModuleManager()
         delete g_com_ModuleManager;
     }
 
-    g_com_ModuleManager = new ref ModuleManager();
+    g_com_ModuleManager = new ModuleManager();
 
     return g_com_ModuleManager;
 }
