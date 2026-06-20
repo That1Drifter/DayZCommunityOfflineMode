@@ -132,7 +132,6 @@ class CommunityOfflineClient extends MissionGameplay
         }
 
         #ifdef MODULE_LOOT_DEBUG
-        Print("[LootDebug] CreateScriptedMenu id=" + id + " (LD MENU_ID=" + LootDebugMenu.MENU_ID + ")");
         if(id == LootDebugMenu.MENU_ID)
         {
             return new LootDebugMenu();
