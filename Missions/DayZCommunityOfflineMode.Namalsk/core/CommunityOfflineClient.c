@@ -102,27 +102,26 @@ class CommunityOfflineClient extends MissionGameplay
 
     static void SetupWeather()
     {
-        /*
-          [Namalsk] Mission time init
-           after CE init to determine if storage mission type is outside of the required time-frame
-           currently recommended time-frame is:
-            11/1 -> 11/30
-            keep in mind that gameplay features are tied to the mission date (stored in the storage) and that it SHOULD remain this period!
-           while using:
-            day accelerated 6 times (serverTimeAcceleration=6), resulting in an average 78 min of day-time (RL)
-            night accelerated 24 times (serverNightTimeAcceleration=4), resulting in an average of 26 min of night-time (RL)
-        */
-        int year, month, day, hour, minute;
-        GetGame().GetWorld().GetDate( year, month, day, hour, minute );
+        Weather weather = g_Game.GetWeather();
 
-        if ( ( month < 11 ) || ( month >= 12 ) )
-        {
-            year = 2011;
-            month = 11;
-            day = 1;
-            
-            GetGame().GetWorld().SetDate( year, month, day, hour, minute );
-        }
+        weather.GetOvercast().SetLimits( 0.0 , 2.0 );
+        weather.GetRain().SetLimits( 0.0 , 2.0 );
+        weather.GetFog().SetLimits( 0.0 , 2.0 );
+
+        weather.GetOvercast().SetForecastChangeLimits( 0.0, 0.0 );
+        weather.GetRain().SetForecastChangeLimits( 0.0, 0.0 );
+        weather.GetFog().SetForecastChangeLimits( 0.0, 0.0 );
+
+        weather.GetOvercast().SetForecastTimeLimits( 1800 , 1800 );
+        weather.GetRain().SetForecastTimeLimits( 600 , 600 );
+        weather.GetFog().SetForecastTimeLimits( 600 , 600 );
+
+        weather.GetOvercast().Set( 0.0, 0, 0 );
+        weather.GetRain().Set( 0.0, 0, 0 );
+        weather.GetFog().Set( 0.0, 0, 0 );
+
+        weather.SetWindMaximumSpeed( 50 );
+        weather.SetWindFunctionParams( 0, 0, 1 );
     }
     
     override UIScriptedMenu CreateScriptedMenu(int id)
@@ -131,7 +130,14 @@ class CommunityOfflineClient extends MissionGameplay
         {
             return new EditorMenu();
         }
-        
+
+        #ifdef MODULE_LOOT_DEBUG
+        if(id == LootDebugMenu.MENU_ID)
+        {
+            return new LootDebugMenu();
+        }
+        #endif
+
         return super.CreateScriptedMenu(id);
     }
 }

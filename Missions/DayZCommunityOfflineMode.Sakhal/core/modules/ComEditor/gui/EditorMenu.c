@@ -8,6 +8,7 @@ class EditorMenu extends UIScriptedMenu
 	protected ButtonWidget m_GameButton;
 	protected ButtonWidget m_CameraButton;
 	protected ButtonWidget m_ObjectEditorButton;
+	protected ButtonWidget m_LootDebugButton;
 	
 	protected Widget m_objectMenu;
 	protected Widget m_weatherMenu;
@@ -36,6 +37,7 @@ class EditorMenu extends UIScriptedMenu
 		m_GameButton     = ButtonWidget.Cast( layoutRoot.FindAnyWidget("game_button") );
 		m_CameraButton   = ButtonWidget.Cast( layoutRoot.FindAnyWidget("camera_button") );
 		m_ObjectEditorButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget( "objectEditor_button" ));
+		m_LootDebugButton    = ButtonWidget.Cast(layoutRoot.FindAnyWidget( "lootdebug_button" ));
 
 
 		// object menu
@@ -141,6 +143,15 @@ class EditorMenu extends UIScriptedMenu
 		{
 			m_cameraMenu.GetScript( popMenu );
 		}
+
+		#ifdef MODULE_LOOT_DEBUG
+		if ( w == m_LootDebugButton )
+		{
+			LootDebug ld = LootDebug.Cast( COM_GetModuleManager().GetModule( LootDebug ) );
+			if ( ld ) ld.DumpLootInfo();
+			return false;
+		}
+		#endif
 
 		if ( popMenu ) 
 		{

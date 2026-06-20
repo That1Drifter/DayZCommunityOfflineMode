@@ -1,0 +1,103 @@
+FrameWidgetClass LootDebugMenu
+{
+	visible 1
+	color 0 0 0 0
+	position 0 0
+	size 800 600
+	halign center_ref
+	valign center_ref
+	hexactpos 0
+	vexactpos 0
+	hexactsize 1
+	vexactsize 1
+	style EditorPanel
+
+	{
+		PanelWidgetClass Background
+		{
+			visible 1
+			color 0 0 0 0.78
+			position 0 0
+			size 800 600
+			hexactpos 1
+			vexactpos 1
+			hexactsize 1
+			vexactsize 1
+			style rover_sim_colorable
+		}
+
+		PanelWidgetClass title_wrapper
+		{
+			visible 1
+			color 0 0 0 0.85
+			position 0 0
+			size 800 28
+			hexactpos 1
+			vexactpos 1
+			hexactsize 1
+			vexactsize 1
+			style rover_sim_colorable
+
+			{
+				TextWidgetClass title_text
+				{
+					position 10 0
+					size 600 28
+					hexactpos 1
+					vexactpos 1
+					hexactsize 1
+					vexactsize 1
+					style Normal
+					text "LootDebug — Building Inspector"
+					font "gui/fonts/Metron-Bold58"
+					"exact text" 1
+					"exact text size" 18
+					"text halign" left
+					"text valign" center
+				}
+			}
+		}
+
+		ScrollWidgetClass scroller
+		{
+			position 5 35
+			size 790 525
+			hexactpos 1
+			vexactpos 1
+			hexactsize 1
+			vexactsize 1
+
+			{
+				MultilineTextWidgetClass infotext
+				{
+					position 5 5
+					size 770 1500
+					hexactpos 1
+					vexactpos 1
+					hexactsize 1
+					vexactsize 1
+					text "(no data)"
+					font "gui/fonts/everythingfont"
+					"exact text" 1
+					"exact text size" 14
+					"text halign" left
+					"text valign" top
+					wrap 1
+				}
+			}
+		}
+
+		ButtonWidgetClass btn_close
+		{
+			position 5 5
+			size 100 25
+			halign right_ref
+			valign bottom_ref
+			hexactpos 1
+			vexactpos 1
+			hexactsize 1
+			vexactsize 1
+			text "Close"
+		}
+	}
+}
